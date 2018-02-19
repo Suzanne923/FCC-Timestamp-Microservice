@@ -8,6 +8,11 @@ app.use(bodyParser.json());
 
 app.use(express.static(process.cwd() + '/views'));
 
+function parseDate(iso) {
+  const date = new Date(iso);
+  return date.getMonth + 
+}
+
 app.get('/:str', (req, res) => {
   const string = req.params.str;
   console.log(string);
