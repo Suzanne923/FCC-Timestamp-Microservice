@@ -8,20 +8,23 @@ app.use(bodyParser.json());
 
 app.use(express.static(process.cwd() + '/views'));
 
-function parseDate(iso) {
+function parseDate(unix) {
   const format = { 
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   }
-  const date = new Date(unix);
-  return date.toLocaleString("en-US", format);
+  
+  if (isNaN(unix)) {
+    const date = new Date(unix);
+    const naturalDate = date.toLocaleString("en-US", format);
+    return { "unix": unix, "natural": naturalDate }
+  }
 }
 
 app.get('/:str', (req, res) => {
   const string = req.params.str;
-  const naturalDate = parseDate(string);
-  res.json({ "unix": 1450137600, "natural": naturalDate });
+  res.json(parseDate(string));
 });
 
 app.listen(process.env.PORT, () => {
