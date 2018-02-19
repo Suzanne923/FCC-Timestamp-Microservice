@@ -8,17 +8,21 @@ app.use(bodyParser.json());
 
 app.use(express.static(process.cwd() + '/views'));
 
-function parseDate(unix) {
+function parseDate(val) {
   const format = { 
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   }
   
-  if (isNaN(unix)) {
-    const date = new Date(unix);
-    const naturalDate = date.toLocaleString("en-US", format);
-    return { "unix": unix, "natural": naturalDate }
+  if (isNaN(val)) {
+    const date = new Date(val);
+    const unixDate = date.getTime() / 1000;
+    const naturalDate = date.toLocaleString("en-US", format) !== "Invalid Date" ? date.toLocaleString("en-US", format) : null;
+    return { "unix": unixDate, "natural": naturalDate }
+  } else {
+    const date = new Date(val * 1000);
+    const naturalDate = date.toLocaleString("en-US", format) !== "Invalid Date" ? date.toLocaleString("en-US", format) : null;
   }
 }
 
