@@ -1,4 +1,5 @@
 const express = require('express');
+const http = require('http');
 const app = express();
 
 if (!process.env.DISABLE_XORIGIN) {
@@ -16,7 +17,8 @@ if (!process.env.DISABLE_XORIGIN) {
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
-app.listen(process.env.PORT, () => {
+const server = http.createServer(app);
+server.listen(process.env.PORT, () => {
   console.log('Node.js listening ...');
 });
 
