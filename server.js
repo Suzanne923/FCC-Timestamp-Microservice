@@ -23,7 +23,7 @@ function parseDate(val) {
   } else {
     const date = new Date(val * 1000);
     const naturalDate = date.toLocaleString("en-US", format) !== "Invalid Date" ? date.toLocaleString("en-US", format) : null;
-    return { "unix": val, "natural": naturalDate };
+    return { "unix": parseInt(val), "natural": naturalDate };
   }
 }
 
